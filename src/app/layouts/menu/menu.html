@@ -1,0 +1,166 @@
+<div class="dashboard-container">
+  <!-- Sidebar -->
+  <aside class="sidebar" [class.sidebar-collapsed]="sidebarCollapsed()">
+    <!-- Logo -->
+    <div class="sidebar-header">
+      @if (!sidebarCollapsed()) {
+        <div class="logo">
+          <img src="/images/morphos-logo.svg" alt="Morphos Logo" class="logo-icon">
+          <span class="logo-text">Morphos</span>
+        </div>
+      }
+      @if (!sidebarCollapsed()) {
+        <button class="toggle-btn" (click)="toggleSidebar()">
+          <!-- <img src="/icons/menu_close.svg" alt="Close Sidebar"> -->
+           <i class="icon icon-close"></i>
+        </button>
+      }
+      @if (sidebarCollapsed()) {
+        <button class="toggle-btn-collapsed" (click)="toggleSidebar()">
+          <i class="icon icon-open"></i>
+        </button>
+      }
+    </div>
+
+    <!-- Navigation Menu -->
+    <nav class="sidebar-nav">
+      <ul class="nav-list">
+        <li class="nav-item">
+          <a (click)="navigateTo('/dashboard')" class="nav-link" [class.active]="isDashboardActive()">
+            <i class="icon icon-dashboard"></i>
+            @if (!sidebarCollapsed()) {
+              <span class="nav-text">Dashboard</span>
+            }
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a (click)="navigateTo('/task')" class="nav-link" [class.active]="isTaskActive()">
+            <i class="icon icon-tarea"></i>
+            @if (!sidebarCollapsed()) {
+              <span class="nav-text">Tareas</span>
+            }
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a (click)="navigateTo('/forms')" class="nav-link" [class.active]="isFormsActive()">
+            <i class="icon icon-formulario"></i>
+            @if (!sidebarCollapsed()) {
+              <span class="nav-text">Formularios</span>
+            }
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a (click)="navigateTo('/users')" class="nav-link" [class.active]="isUsersActive()">
+            <i class="icon icon-usuarios"></i>
+            @if (!sidebarCollapsed()) {
+              <span class="nav-text">Usuarios</span>
+            }
+          </a>
+        </li>
+
+        <li class="nav-item has-submenu" [class.submenu-open]="reportesOpen()">
+          <a href="#" class="nav-link" (click)="toggleReportes()">
+            <i class="icon icon-reportes"></i>
+            @if (!sidebarCollapsed()) {
+              <span class="nav-text">Reportes</span>
+            }
+            @if (!sidebarCollapsed()) {
+              <i class="icon icon-arrow-down" [class.rotated]="reportesOpen()"></i>
+            }
+          </a>
+          @if (reportesOpen() && !sidebarCollapsed()) {
+            <ul class="submenu">
+              <li class="submenu-item">
+                <a href="#" class="submenu-link">Reporte General</a>
+              </li>
+              <li class="submenu-item">
+                <a href="#" class="submenu-link">Reporte de Tareas</a>
+              </li>
+              <li class="submenu-item">
+                <a href="#" class="submenu-link">Reporte de Usuarios</a>
+              </li>
+            </ul>
+          }
+        </li>
+
+        <li class="nav-item has-submenu" [class.submenu-open]="estadosOpen()">
+          <a href="#" class="nav-link" (click)="toggleEstados()">
+            <i class="icon icon-estado-cuenta"></i>
+            @if (!sidebarCollapsed()) {
+              <span class="nav-text">Estados de cuenta</span>
+            }
+            @if (!sidebarCollapsed()) {
+              <i class="icon icon-arrow-down" [class.rotated]="estadosOpen()"></i>
+            }
+          </a>
+          @if (estadosOpen() && !sidebarCollapsed()) {
+            <ul class="submenu">
+              <li class="submenu-item">
+                <a href="#" class="submenu-link">Estado Actual</a>
+              </li>
+              <li class="submenu-item">
+                <a href="#" class="submenu-link">Historial</a>
+              </li>
+            </ul>
+          }
+        </li>
+      </ul>
+    </nav>
+
+    <!-- User Info Section -->
+    @if (!sidebarCollapsed()) {
+      <div class="user-info">
+        <div class="user-avatar">
+          <img src="https://i.pravatar.cc/40?img=1" alt="User Avatar" class="avatar-image">
+          <div class="status-indicator"></div>
+        </div>
+        <div class="user-details">
+          <div class="user-name">Olivia Rhye</div>
+          <div class="user-email">oliviarhye&#64;email.com</div>
+        </div>
+        <button class="user-menu-btn" (click)="toggleUserMenu()">
+          <i class="icon icon-menu"></i>
+        </button>
+      </div>
+    }
+
+    <!-- User Info Collapsed -->
+    @if (sidebarCollapsed()) {
+      <div class="user-info-collapsed">
+        <div class="user-avatar-small">
+          <img src="https://i.pravatar.cc/32?img=1" alt="User Avatar" class="avatar-image-small">
+          <div class="status-indicator-small"></div>
+        </div>
+      </div>
+    }
+  </aside>
+
+  <!-- Mobile Overlay -->
+  @if (!sidebarCollapsed() && isMobile()) {
+    <div class="mobile-overlay"
+         (click)="closeSidebar()">
+    </div>
+  }
+
+  <!-- Main Content Area -->
+  <main class="main-content" [class.content-expanded]="sidebarCollapsed()">
+    <!-- Header -->
+    <header class="main-header">
+      <button class="mobile-menu-btn" (click)="toggleSidebar()">
+        <i class="icon icon-open"></i>
+      </button>
+      <h1 class="page-title">Dashboard</h1>
+      <div class="header-actions">
+        <!-- Aquí puedes agregar acciones del header como notificaciones, perfil, etc. -->
+      </div>
+    </header>
+
+    <!-- Content Slot -->
+    <div class="content-area">
+      <ng-content></ng-content>
+    </div>
+  </main>
+</div>

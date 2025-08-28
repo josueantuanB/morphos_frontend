@@ -1,1 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.p-inputtext-lg {
+  font-size: 1rem !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 1.5rem !important;
+  letter-spacing: -0.02rem !important;
+  color: #737373 !important;
+  border-radius: 0.5rem !important;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 2rem;
+  letter-spacing: -0.015rem;
+  text-align: center;
+
+}
+
+.mt-1 {
+  margin-top: 0.5rem;
+}
+
+.mb-1 {
+  margin-bottom: 0.5rem;
+}
