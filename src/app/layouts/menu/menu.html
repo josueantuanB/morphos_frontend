@@ -118,10 +118,9 @@
           <div class="status-indicator"></div>
         </div>
         <div class="user-details">
-          <div class="user-name">Olivia Rhye</div>
-          <div class="user-email">oliviarhye&#64;email.com</div>
+          <div class="user-name">{{username()}}</div>
         </div>
-        <button class="user-menu-btn" (click)="toggleUserMenu()">
+        <button class="user-menu-btn" (click)="logout()" title="Cerrar sesión">
           <i class="icon icon-menu"></i>
         </button>
       </div>
@@ -129,7 +128,7 @@
 
     <!-- User Info Collapsed -->
     @if (sidebarCollapsed()) {
-      <div class="user-info-collapsed">
+      <div class="user-info-collapsed" (click)="logout()" title="Cerrar sesión" style="cursor: pointer;">
         <div class="user-avatar-small">
           <img src="https://i.pravatar.cc/32?img=1" alt="User Avatar" class="avatar-image-small">
           <div class="status-indicator-small"></div>

@@ -1,6 +1,7 @@
 import { Component, HostListener, signal } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { AuthService } from '../../features/auth/services/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -14,10 +15,12 @@ export class Menu {
   estadosOpen = signal(false);
   isMobile = signal(false);
   currentRoute = signal('');
+  username = signal('Usuario');
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private authService: AuthService) {
     this.checkScreenSize();
     this.setupRouteListener();
+    this.loadUserData();
   }
 
   @HostListener('window:resize')
@@ -28,13 +31,18 @@ export class Menu {
   private setupRouteListener() {
     // Establecer la ruta inicial
     this.currentRoute.set(this.router.url);
-    
+
     // Escuchar cambios de ruta
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.currentRoute.set(event.url);
       });
+  }
+
+  private loadUserData() {
+    const username = this.authService.getUsername();
+    this.username.set(username);
   }
 
   private checkScreenSize() {
@@ -99,5 +107,11 @@ export class Menu {
   toggleUserMenu() {
     // Aquí puedes agregar la lógica para mostrar/ocultar el menú del usuario
     console.log('Toggle user menu');
+  }
+
+  // Método para cerrar sesión
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }
