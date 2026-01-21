@@ -1,0 +1,129 @@
+.roles-table-container {
+  background-color: var(--color-background-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+}
+
+/* Toolbar */
+.roles-table__toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.roles-table__search-section {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.roles-table__search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.roles-table__search-icon {
+  position: absolute;
+  left: 12px;
+  width: 16px;
+  height: 16px;
+  background-color: var(--color-text-secondary);
+  -webkit-mask: url('/icons/search.svg') no-repeat center;
+  mask: url('/icons/search.svg') no-repeat center;
+  -webkit-mask-size: contain;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.action-icon {
+  width: 4px;
+  height: 15px;
+  display: block;
+}
+
+.roles-table__search-input {
+  padding-left: 36px !important;
+  min-width: 280px;
+  height: 42px;
+}
+
+/* Table */
+.roles-table__wrapper {
+  overflow-x: auto;
+}
+
+.roles-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.roles-table__head {
+  background-color: var(--color-background-secondary);
+}
+
+.roles-table__head th {
+  padding: var(--spacing-md);
+  text-align: left;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.roles-table__body tr {
+  border-bottom: 1px solid var(--color-border);
+  transition: background-color var(--transition-fast);
+}
+
+.roles-table__body tr:hover {
+  background-color: var(--color-background-secondary);
+}
+
+.roles-table__body tr:last-child {
+  border-bottom: none;
+}
+
+.roles-table__cell {
+  padding: var(--spacing-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  vertical-align: middle;
+}
+
+.roles-table__cell--code {
+  font-weight: 500;
+  width: 100px;
+}
+
+.roles-table__cell--name {
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.roles-table__cell--actions {
+  width: 48px;
+  text-align: center;
+}
+
+.roles-table__empty {
+  text-align: center;
+  padding: var(--spacing-xl) !important;
+  color: var(--color-text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .roles-table__toolbar {
+    flex-direction: column;
+    gap: var(--spacing-md);
+    align-items: stretch;
+  }
+
+  .roles-table__search-input {
+    min-width: 100%;
+  }
+}

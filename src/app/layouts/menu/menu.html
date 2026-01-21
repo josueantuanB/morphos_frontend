@@ -52,17 +52,32 @@
           </a>
         </li>
 
-        <li class="nav-item">
-          <a (click)="navigateTo('/users')" class="nav-link" [class.active]="isUsersActive()">
+        <li class="nav-item has-submenu" [class.submenu-open]="usersOpen()">
+        <li class="nav-item has-submenu" [class.submenu-open]="usersOpen()">
+          <a class="nav-link" (click)="toggleUsers()">
             <i class="icon icon-usuarios"></i>
             @if (!sidebarCollapsed()) {
               <span class="nav-text">Usuarios</span>
             }
+            @if (!sidebarCollapsed()) {
+              <i class="icon icon-arrow-down" [class.rotated]="usersOpen()"></i>
+            }
           </a>
+          @if (usersOpen() && !sidebarCollapsed()) {
+            <ul class="submenu">
+              <li class="submenu-item">
+                <a (click)="navigateTo('/users/management')" class="submenu-link" [class.active]="isRouteActive('/users/management')">Gestión usuarios</a>
+              </li>
+              <li class="submenu-item">
+                <a (click)="navigateTo('/users/roles')" class="submenu-link" [class.active]="isRouteActive('/users/roles')">Roles y Permisos</a>
+              </li>
+            </ul>
+          }
         </li>
 
         <li class="nav-item has-submenu" [class.submenu-open]="reportesOpen()">
-          <a href="#" class="nav-link" (click)="toggleReportes()">
+        <li class="nav-item has-submenu" [class.submenu-open]="reportesOpen()">
+          <a class="nav-link" (click)="toggleReportes()">
             <i class="icon icon-reportes"></i>
             @if (!sidebarCollapsed()) {
               <span class="nav-text">Reportes</span>
@@ -87,7 +102,8 @@
         </li>
 
         <li class="nav-item has-submenu" [class.submenu-open]="estadosOpen()">
-          <a href="#" class="nav-link" (click)="toggleEstados()">
+        <li class="nav-item has-submenu" [class.submenu-open]="estadosOpen()">
+          <a class="nav-link" (click)="toggleEstados()">
             <i class="icon icon-estado-cuenta"></i>
             @if (!sidebarCollapsed()) {
               <span class="nav-text">Estados de cuenta</span>
@@ -151,7 +167,7 @@
       <button class="mobile-menu-btn" (click)="toggleSidebar()">
         <i class="icon icon-open"></i>
       </button>
-      <h1 class="page-title">Dashboard</h1>
+      <h1 class="page-title">{{ pageTitle() }}</h1>
       <div class="header-actions">
         <!-- Aquí puedes agregar acciones del header como notificaciones, perfil, etc. -->
       </div>

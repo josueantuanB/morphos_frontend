@@ -1,0 +1,231 @@
+/* Inline Field Editor - Card Style */
+.field-editor-inline {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: calc(100% - 4rem);
+  margin: 0 auto;
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+/* Header */
+.field-editor__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.field-editor__type {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.type-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+}
+
+.type-icon i {
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.type-label {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.help-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.help-btn:hover {
+  background-color: var(--color-background-secondary);
+  color: var(--color-primary);
+}
+
+.field-editor__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.required-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+::ng-deep .btn-save-block {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+}
+
+/* Content - Scrollable area between header and footer */
+.field-editor__content {
+  padding: 1.5rem;
+  flex: 1;
+  min-height: 0; /* Important: allows flex child to shrink below content size */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.form-input {
+  width: 100%;
+}
+
+/* Options Editor */
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.option-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.option-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background-color: var(--color-background-secondary);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+.option-input {
+  flex: 1;
+}
+
+.option-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.option-remove:hover:not(:disabled) {
+  background-color: #fef2f2;
+  color: #ef4444;
+}
+
+.option-remove:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.add-option-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: none;
+  border: 2px dashed var(--color-border);
+  border-radius: 8px;
+  color: var(--color-primary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-option-btn:hover {
+  border-color: var(--color-primary);
+  background-color: rgba(0, 144, 136, 0.05);
+}
+
+/* Footer - Stays at bottom */
+.field-editor__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid var(--color-border);
+  background-color: #fafafa;
+  border-radius: 0 0 12px 12px;
+  flex-shrink: 0;
+}
+
+::ng-deep .btn-add-another {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .field-editor__header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .field-editor__actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .field-editor__footer {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .field-editor__footer p-button {
+    width: 100%;
+  }
+}

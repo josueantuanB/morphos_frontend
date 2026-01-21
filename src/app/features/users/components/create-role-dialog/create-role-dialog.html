@@ -1,0 +1,64 @@
+<p-dialog 
+  header="Nuevo Rol" 
+  [(visible)]="visible" 
+  [modal]="true" 
+  [style]="{ width: '700px', maxWidth: '90vw' }"
+  [draggable]="false" 
+  [resizable]="false"
+  styleClass="create-role-dialog">
+  
+  <div class="role-form">
+    <!-- Role Name Input -->
+    <div class="form-field">
+      <label for="roleName" class="form-label">Nombre del Rol</label>
+      <input 
+        pInputText 
+        id="roleName" 
+        [(ngModel)]="roleName" 
+        placeholder="Ej. Administrador de Usuarios" 
+        class="name-input" />
+    </div>
+
+    <!-- Permissions List -->
+    <div class="permissions-section">
+      <h3 class="permissions-title">Permisos</h3>
+      <p class="permissions-subtitle">Selecciona los permisos que tendrá este rol</p>
+      
+      <div class="permissions-container">
+        @for (module of permissions(); track module.name) {
+          <div class="module-group">
+            <h4 class="module-name">{{ module.name }}</h4>
+            <div class="scopes-grid">
+              @for (scope of module.scopes; track scope.id) {
+                <div class="scope-item">
+                  <p-checkbox 
+                    [binary]="true" 
+                    [(ngModel)]="scope.selected" 
+                    [inputId]="scope.id">
+                  </p-checkbox>
+                  <label [for]="scope.id" class="scope-label">{{ scope.name }}</label>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="dialog-footer">
+      <p-button 
+        label="Cancelar" 
+        (click)="cancel()" 
+        [text]="true" 
+        severity="secondary" />
+      <p-button 
+        label="Guardar Rol" 
+        (click)="save()" 
+        [disabled]="!roleName()" 
+        icon="pi pi-check" 
+        styleClass="save-button" />
+    </div>
+  </ng-template>
+</p-dialog>

@@ -1,0 +1,120 @@
+<div class="data-table-container">
+  <!-- Toolbar -->
+  <div class="data-table__toolbar">
+    <div class="data-table__search-section">
+      <span class="data-table__search-wrapper">
+        <i class="data-table__search-icon"></i>
+        <input 
+          type="text" 
+          pInputText 
+          placeholder="Buscar código, nombre de usuario..."
+          class="data-table__search-input"
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="searchQuery.set($event)" />
+      </span>
+      <p-button 
+        label="Filtro" 
+        icon="icon-arrow-down" 
+        iconPos="right"
+        severity="secondary"
+        variant="outlined"
+        styleClass="data-table__filter-btn" />
+    </div>
+    <p-button 
+      label="Asignar" 
+      severity="secondary"
+      variant="outlined"
+      (click)="onAssignClick()" />
+  </div>
+
+  <!-- Table -->
+  <div class="data-table__wrapper">
+    <table class="data-table">
+      <thead class="data-table__head">
+        <tr>
+          <th class="data-table__cell data-table__cell--checkbox">
+            <p-checkbox 
+              [ngModel]="allSelected()" 
+              [binary]="true"
+              (ngModelChange)="toggleSelectAll()" />
+          </th>
+          <th class="data-table__cell">Código</th>
+          <th class="data-table__cell">Nombre</th>
+          <th class="data-table__cell">Rol/tipo</th>
+          <th class="data-table__cell">Última tarea</th>
+          <th class="data-table__cell">% Tareas completadas</th>
+          <th class="data-table__cell data-table__cell--actions"></th>
+        </tr>
+      </thead>
+      <tbody class="data-table__body">
+        @for (user of paginatedUsers(); track user.usrId) {
+          <tr class="data-table__row">
+            <td class="data-table__cell data-table__cell--checkbox">
+              <p-checkbox 
+                [ngModel]="isSelected(user.usrId)" 
+                [binary]="true"
+                (ngModelChange)="toggleUserSelection(user.usrId)" />
+            </td>
+            <td class="data-table__cell data-table__cell--code">{{ user.usrId }}</td>
+            <td class="data-table__cell data-table__cell--user">
+              <div class="user-info-cell">
+                <img 
+                  [src]="user.usrAvatar || '/images/default-avatar.png'" 
+                  [alt]="user.usrName"
+                  class="user-info-cell__avatar" />
+                <div class="user-info-cell__details">
+                  <span class="user-info-cell__name">{{ user.usrName }}</span>
+                  <span class="user-info-cell__email">{{ user.usrEmail }}</span>
+                </div>
+              </div>
+            </td>
+            <td class="data-table__cell">
+              <span class="role-badge">{{ user.usrRole }}</span>
+            </td>
+            <td class="data-table__cell">{{ user.usrLastTask }}</td>
+            <td class="data-table__cell data-table__cell--progress">
+              <div class="progress-cell">
+                <div class="progress-bar" [class]="getProgressBarClass(user.usrTasksCompleted)">
+                  <div class="progress-bar__fill" [style.width.%]="user.usrTasksCompleted"></div>
+                </div>
+                <span class="progress-cell__value">{{ user.usrTasksCompleted }}%</span>
+              </div>
+            </td>
+            <td class="data-table__cell data-table__cell--actions">
+              <p-button 
+                icon="pi pi-ellipsis-v" 
+                [text]="true"
+                severity="secondary"
+                size="small" />
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="7" class="data-table__empty">
+              No se encontraron usuarios
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="data-table__pagination">
+    <p-button 
+      label="Anterior" 
+      severity="secondary"
+      variant="outlined"
+      [disabled]="currentPage() === 1"
+      (click)="previousPage()" />
+    <span class="data-table__pagination-info">
+      Página {{ currentPage() }} de {{ totalPages() }}
+    </span>
+    <p-button 
+      label="Siguiente" 
+      severity="secondary"
+      variant="outlined"
+      [disabled]="currentPage() >= totalPages()"
+      (click)="nextPage()" />
+  </div>
+</div>

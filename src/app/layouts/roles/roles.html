@@ -1,0 +1,13 @@
+<app-menu>
+  <div class="page-roles" style="padding: 0;">
+    <app-users-header 
+      title="Roles y Permisos" 
+      icon="icon-lock-keyhole" 
+      buttonLabel="Nuevo Rol" 
+      [showDateSelector]="false"
+      (newUserClick)="openCreateRoleModal()">
+    </app-users-header>
+    <app-roles-table></app-roles-table>
+    <app-create-role-dialog [(visible)]="isCreateRoleModalVisible"></app-create-role-dialog>
+  </div>
+</app-menu>

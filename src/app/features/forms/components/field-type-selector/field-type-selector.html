@@ -1,0 +1,27 @@
+<p-dialog 
+  header="Selecciona el tipo de campo" 
+  [(visible)]="visible" 
+  [modal]="true" 
+  [style]="{ width: '500px', maxWidth: '90vw' }"
+  [draggable]="false" 
+  [resizable]="false"
+  styleClass="field-type-dialog">
+  
+  <div class="field-types-grid">
+    @for (fieldType of fieldTypes; track fieldType.type) {
+      <button 
+        class="field-type-card" 
+        (click)="selectType(fieldType.type)"
+        [style.--accent-color]="fieldType.color">
+        <div class="field-type-card__icon" [style.background-color]="fieldType.color">
+          <i [class]="fieldType.icon"></i>
+        </div>
+        <div class="field-type-card__content">
+          <h3 class="field-type-card__title">{{ fieldType.label }}</h3>
+          <p class="field-type-card__description">{{ fieldType.description }}</p>
+        </div>
+        <i class="pi pi-chevron-right field-type-card__arrow"></i>
+      </button>
+    }
+  </div>
+</p-dialog>

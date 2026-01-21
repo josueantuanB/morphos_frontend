@@ -1,50 +1,10 @@
 <app-menu>
- <div style="align-self: stretch; padding: 20px; background: white; overflow: hidden; border-radius: 12px; outline: 1px var(--Border-Secondary---200, #E5E5E5) solid; outline-offset: -1px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 24px; display: inline-flex">
-  <div style="align-self: stretch; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 4px; display: flex">
-    <div style="align-self: stretch; justify-content: center; display: flex; flex-direction: column; color: var(--Text-Primary---950, #171717); font-size: 20px; font-family: Inter; font-weight: 600; line-height: 30px; word-wrap: break-word">Plantillas prediseñadas</div>
-    <div style="align-self: stretch; color: var(--Text-Secondary---700, #404040); font-size: 16px; font-family: Inter; font-weight: 400; line-height: 24px; word-wrap: break-word">Elige una plantilla para ahorrar tiempo y personalízala según tus necesidades.</div>
+  <div class="page-forms">
+    <app-forms-header 
+      (createTask)="onCreateTask()" 
+      (createForm)="onCreateForm()">
+    </app-forms-header>
+    <app-templates-section></app-templates-section>
+    <app-forms-table></app-forms-table>
   </div>
-  <div style="align-self: stretch; justify-content: flex-start; align-items: flex-start; gap: 12px; display: inline-flex">
-    <div style="flex: 1 1 0; padding: 14px; background: var(--Background-White, white); overflow: hidden; border-radius: 10px; outline: 1px var(--Border-Secondary---200, #E5E5E5) solid; outline-offset: -1px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 10px; display: inline-flex">
-      <div style="padding: 8px; background: var(--Azul-50, #EFF8FF); border-radius: 6px; justify-content: flex-start; align-items: center; gap: 8px; display: inline-flex">
-        <div data-tab="Formularios" style="width: 18px; height: 18px; position: relative; overflow: hidden">
-          <div style="width: 18px; height: 18px; left: 0px; top: 0px; position: absolute; opacity: 0; background: var(--Icons-Secondary, #525252)"></div>
-          <div style="width: 16.13px; height: 16.13px; left: 0.94px; top: 0.94px; position: absolute; background: var(--Azul-700, #175CD3)"></div>
-        </div>
-      </div>
-      <div style="align-self: stretch; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 2px; display: flex">
-        <div style="align-self: stretch; justify-content: center; display: flex; flex-direction: column; color: var(--Text-Primary---950, #171717); font-size: 16px; font-family: Inter; font-weight: 600; line-height: 24px; word-wrap: break-word">Título del formulario</div>
-        <div style="align-self: stretch; color: var(--Text-Terciary---600, #525252); font-size: 14px; font-family: Inter; font-weight: 400; line-height: 20px; word-wrap: break-word">Descripción breve</div>
-      </div>
-    </div>
-    <div style="flex: 1 1 0; padding: 14px; background: var(--Background-White, white); overflow: hidden; border-radius: 10px; outline: 1px var(--Border-Secondary---200, #E5E5E5) solid; outline-offset: -1px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 10px; display: inline-flex">
-      <div style="padding: 8px; background: var(--Morado-50, #F4F3FF); border-radius: 6px; justify-content: flex-start; align-items: center; gap: 8px; display: inline-flex">
-        <div data-tab="Formularios" style="width: 18px; height: 18px; position: relative; overflow: hidden">
-          <div style="width: 18px; height: 18px; left: 0px; top: 0px; position: absolute; opacity: 0; background: var(--Icons-Secondary, #525252)"></div>
-          <div style="width: 16.13px; height: 16.13px; left: 0.94px; top: 0.94px; position: absolute; background: var(--Morado-600, #6938EF)"></div>
-        </div>
-      </div>
-      <div style="align-self: stretch; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 2px; display: flex">
-        <div style="align-self: stretch; justify-content: center; display: flex; flex-direction: column; color: var(--Text-Primary---950, #171717); font-size: 16px; font-family: Inter; font-weight: 600; line-height: 24px; word-wrap: break-word">Título del formulario</div>
-        <div style="align-self: stretch; color: var(--Text-Terciary---600, #525252); font-size: 14px; font-family: Inter; font-weight: 400; line-height: 20px; word-wrap: break-word">Descripción breve</div>
-      </div>
-    </div>
-    <div style="flex: 1 1 0; padding: 14px; background: var(--Background-White, white); overflow: hidden; border-radius: 10px; outline: 1px var(--Border-Secondary---200, #E5E5E5) solid; outline-offset: -1px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 10px; display: inline-flex">
-      <div style="padding: 8px; background: var(--Naranja-50, #FFF6ED); border-radius: 6px; justify-content: flex-start; align-items: center; gap: 8px; display: inline-flex">
-        <div data-tab="Formularios" style="width: 18px; height: 18px; position: relative; overflow: hidden">
-          <div style="width: 18px; height: 18px; left: 0px; top: 0px; position: absolute; opacity: 0; background: var(--Icons-Secondary, #525252)"></div>
-          <div style="width: 16.13px; height: 16.13px; left: 0.94px; top: 0.94px; position: absolute; background: var(--Naranja-600, #EC4A0A)"></div>
-        </div>
-      </div>
-      <div style="align-self: stretch; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 2px; display: flex">
-        <div style="align-self: stretch; justify-content: center; display: flex; flex-direction: column; color: var(--Text-Primary---950, #171717); font-size: 16px; font-family: Inter; font-weight: 600; line-height: 24px; word-wrap: break-word">Título del formulario</div>
-        <div style="align-self: stretch; color: var(--Text-Terciary---600, #525252); font-size: 14px; font-family: Inter; font-weight: 400; line-height: 20px; word-wrap: break-word">Descripción breve</div>
-      </div>
-    </div>
-    <div style="align-self: stretch; padding-left: 20px; padding-right: 20px; padding-top: 12px; padding-bottom: 12px; background: var(--Background-White, white); overflow: hidden; border-radius: 10px; outline: 1px var(--Border-Secondary---200, #E5E5E5) solid; outline-offset: -1px; flex-direction: column; justify-content: center; align-items: center; gap: 4px; display: inline-flex">
-      <div style="text-align: center; justify-content: center; display: flex; flex-direction: column; color: var(--Turquesa-Brand-700-logo, #009088); font-size: 24px; font-family: Inter; font-weight: 600; line-height: 32px; word-wrap: break-word">+20</div>
-      <div style="text-align: center; justify-content: center; display: flex; flex-direction: column; color: var(--Text-Primary---950, #171717); font-size: 16px; font-family: Inter; font-weight: 600; line-height: 24px; word-wrap: break-word">Ver todas las plantillas</div>
-    </div>
-  </div>
-</div>
 </app-menu>

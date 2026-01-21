@@ -1,0 +1,73 @@
+.field-types-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+}
+
+.field-type-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  width: 100%;
+}
+
+.field-type-card:hover {
+  border-color: var(--accent-color, var(--color-primary));
+  background-color: rgba(0, 144, 136, 0.03);
+  transform: translateX(4px);
+}
+
+.field-type-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.field-type-card__icon i {
+  font-size: 1.25rem;
+  color: #ffffff;
+}
+
+.field-type-card__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.field-type-card__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.field-type-card__description {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.field-type-card__arrow {
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.field-type-card:hover .field-type-card__arrow {
+  opacity: 1;
+  color: var(--accent-color, var(--color-primary));
+}

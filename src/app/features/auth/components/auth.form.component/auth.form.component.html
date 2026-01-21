@@ -1,11 +1,11 @@
 @if (hasError()) {
-<div class="error-message">
+<div class="form-error-message">
   <p-message severity="error">{{ errorMessage() }}</p-message>
 </div>
 }
 <form [formGroup]="loginForm" (ngSubmit)="login()">
-  <div class="form-container">
-    <div class="container-input">
+  <div class="form-fields-group">
+    <div class="form-input-wrapper">
       <p-floatlabel variant="on">
         <input
           pInputText
@@ -28,7 +28,7 @@
       }
     </div>
 
-    <div class="container-input">
+    <div class="form-input-wrapper">
       <p-floatlabel variant="on">
         <input
           pInputText
@@ -51,37 +51,35 @@
       >
       }
     </div>
-    <div class="container-input">
-      <div class="password-container">
-        <p-floatlabel variant="on">
-          <p-password
-            size="large"
-            [toggleMask]="true"
-            [feedback]="false"
-            placeholder="Contraseña"
-            class="w-full"
-            fluid="true"
-            id="password"
-            formControlName="password"
-            name="password"
-            required
-            [invalid]="loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched"
-          />
-          <label for="password">Contraseña</label>
-        </p-floatlabel>
+    <div class="form-input-wrapper">
+      <p-floatlabel variant="on">
+        <p-password
+          size="large"
+          [toggleMask]="true"
+          [feedback]="false"
+          placeholder="Contraseña"
+          class="layout-full-width"
+          fluid="true"
+          id="password"
+          formControlName="password"
+          name="password"
+          required
+          [invalid]="loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched"
+        />
+        <label for="password">Contraseña</label>
+      </p-floatlabel>
 
-        @if (loginForm.get('password')?.errors?.['required'] &&
-        loginForm.get('password')?.touched) {
-        <p-message severity="error" variant="simple" size="small"
-          >La contraseña es requerida</p-message
-        >
-        }
-      </div>
+      @if (loginForm.get('password')?.errors?.['required'] &&
+      loginForm.get('password')?.touched) {
+      <p-message severity="error" variant="simple" size="small"
+        >La contraseña es requerida</p-message
+      >
+      }
     </div>
 
-    <div class="forget-password-container">
+    <div class="link-action-container">
       <p-confirmdialog draggable="false" defaultFocus="none" />
-      <a class="forget-link" (click)="showModal($event)"
+      <a class="link-action" (click)="showModal($event)"
         >¿Olvidaste tu contraseña?</a
       >
     </div>
@@ -90,18 +88,16 @@
       size="large"
       fluid="true"
       severity="contrast"
-      class="text-button"
-      styleClass="custom-btn"
+      styleClass="button-primary-custom"
       type="submit"
       [loading]="isLoading()"
     />
   </div>
 </form>
-<div class="mt-1">
+<div class="spacing-top-sm">
   <p-button
     label="Iniciar sesión como administrador"
     severity="contrast"
-    class="text-button"
     size="large"
     fluid="true"
     variant="text"

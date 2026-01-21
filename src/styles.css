@@ -1,50 +1,328 @@
-/* You can add global styles to this file, and also import other style files */
+/* ============================================
+   MORPHOS - Sistema de Estilos Globales
+   ============================================ */
 
+/* ===== VARIABLES CSS (Design Tokens) ===== */
+:root {
+  /* Colores primarios */
+  --color-primary: #009088;
+  --color-primary-hover: #007a73;
+  
+  /* Colores de texto */
+  --color-text-primary: #171717;
+  --color-text-secondary: #737373;
+  --color-text-muted: #666666;
+  
+  /* Colores de fondo */
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f8f9fa;
+  --color-background-accent: #eefcf8;
+  
+  /* Bordes */
+  --color-border: #e9ecef;
+  
+  /* Estados */
+  --color-success: #22c55e;
+  --color-error: #ef4444;
+  
+  /* Espaciado */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 2.5rem;
+  
+  /* Tipografía */
+  --font-family-base: 'Inter', sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.5rem;
+  --font-size-xl: 1.8rem;
+  
+  /* Bordes redondeados */
+  --border-radius-sm: 0.5rem;
+  --border-radius-md: 0.625rem;
+  --border-radius-lg: 0.75rem;
+  
+  /* Transiciones */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+}
+
+/* ===== RESET Y BASE ===== */
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-family-base);
   margin: 0;
-}
-
-.d-flex {
-  display: flex;
-}
-
-.w-full {
-  width: 100%;
-}
-
-.items-center {
-  align-items: center;
-}
-
-.justify-center {
-  justify-content: center;
-}
-
-.p-inputtext-lg {
-  font-size: 1rem !important;
-  font-style: normal !important;
-  font-weight: 400 !important;
-  line-height: 1.5rem !important;
-  letter-spacing: -0.02rem !important;
-  color: #737373 !important;
-  border-radius: 0.5rem !important;
+  color: var(--color-text-primary);
 }
 
 h1 {
-  font-size: 1.5rem;
-  font-style: normal;
+  font-size: var(--font-size-lg);
   font-weight: 600;
   line-height: 2rem;
   letter-spacing: -0.015rem;
   text-align: center;
-
 }
 
-.mt-1 {
-  margin-top: 0.5rem;
+/* ===== LAYOUT - Pantalla dividida ===== */
+.layout-split-screen {
+  display: flex;
+  min-height: 100vh;
 }
 
-.mb-1 {
-  margin-bottom: 0.5rem;
+.layout-split-screen__left {
+  flex: 1;
+  background-color: var(--color-background-accent);
+  min-height: 100vh;
 }
+
+.layout-split-screen__right {
+  flex: 1;
+  background-color: var(--color-background-primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-md);
+}
+
+/* Layout responsive para pantalla dividida */
+@media (max-width: 768px) {
+  .layout-split-screen {
+    flex-direction: column;
+  }
+
+  .layout-split-screen__left {
+    min-height: auto;
+    flex: none;
+    padding: var(--spacing-md) 0;
+  }
+
+  .layout-split-screen__right {
+    flex: 1;
+    padding: var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .layout-split-screen__left {
+    padding: var(--spacing-sm) 0;
+  }
+}
+
+/* ===== LAYOUT - Utilidades ===== */
+.layout-flex {
+  display: flex;
+}
+
+.layout-flex--column {
+  flex-direction: column;
+}
+
+.layout-flex--center {
+  align-items: center;
+  justify-content: center;
+}
+
+.layout-flex--align-center {
+  align-items: center;
+}
+
+.layout-full-width {
+  width: 100%;
+}
+
+/* ===== LOGO ===== */
+.logo-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin: var(--spacing-md);
+}
+
+.logo-brand__image {
+  width: 40px;
+  height: 40px;
+}
+
+.logo-brand__text {
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+  color: var(--color-text-primary);
+}
+
+/* Logo responsive */
+@media (max-width: 768px) {
+  .logo-brand {
+    justify-content: center;
+    margin: var(--spacing-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-brand__image {
+    width: 32px;
+    height: 32px;
+  }
+
+  .logo-brand__text {
+    font-size: 1.2rem;
+  }
+}
+
+/* ===== FORMULARIOS ===== */
+
+/* Contenedor principal de formulario */
+.form-container {
+  width: 100%;
+  max-width: 400px;
+  padding: var(--spacing-xl);
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    max-width: 100%;
+    padding: var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    padding: var(--spacing-sm);
+  }
+}
+
+/* Grupo de campos de formulario */
+.form-fields-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* Contenedor de input individual */
+.form-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+/* Título de sección de formulario */
+.form-section-title {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.form-section-title__heading {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+.form-section-title__description {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .form-section-title {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .form-section-title__heading {
+    font-size: var(--font-size-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .form-section-title {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .form-section-title__heading {
+    font-size: 1.3rem;
+  }
+
+  .form-section-title__description {
+    font-size: 0.85rem;
+  }
+}
+
+/* Mensaje de error de formulario */
+.form-error-message {
+  margin-bottom: var(--spacing-lg);
+}
+
+/* ===== ENLACES ===== */
+
+/* Link de acción secundaria */
+.link-action {
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  line-height: 1.25rem;
+  letter-spacing: -0.0175rem;
+  cursor: pointer;
+  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.link-action:hover {
+  text-decoration: underline;
+}
+
+/* Contenedor de link de acción */
+.link-action-container {
+  margin-bottom: var(--spacing-lg);
+}
+
+/* ===== BOTONES (Override PrimeNG) ===== */
+
+/* Botón primario personalizado */
+.button-primary-custom {
+  border-radius: var(--border-radius-md) !important;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  line-height: 1.5rem;
+  letter-spacing: -0.01rem;
+}
+
+/* Label de botones PrimeNG */
+.p-button-label {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  font-weight: 400 !important;
+  line-height: 1.5rem;
+  letter-spacing: -0.01rem;
+}
+
+/* ===== INPUTS (Override PrimeNG) ===== */
+
+.p-inputtext-lg {
+  font-size: var(--font-size-base) !important;
+  font-weight: 400 !important;
+  line-height: 1.5rem !important;
+  letter-spacing: -0.02rem !important;
+  color: var(--color-text-secondary) !important;
+  border-radius: var(--border-radius-sm) !important;
+}
+
+/* ===== UTILIDADES DE ESPACIADO ===== */
+
+.spacing-top-xs { margin-top: var(--spacing-xs); }
+.spacing-top-sm { margin-top: var(--spacing-sm); }
+.spacing-top-md { margin-top: var(--spacing-md); }
+.spacing-top-lg { margin-top: var(--spacing-lg); }
+
+.spacing-bottom-xs { margin-bottom: var(--spacing-xs); }
+.spacing-bottom-sm { margin-bottom: var(--spacing-sm); }
+.spacing-bottom-md { margin-bottom: var(--spacing-md); }
+.spacing-bottom-lg { margin-bottom: var(--spacing-lg); }
+
+/* ===== UTILIDADES DE TEXTO ===== */
+
+.text-center { text-align: center; }

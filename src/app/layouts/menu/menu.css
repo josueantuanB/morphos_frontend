@@ -222,7 +222,7 @@
 }
 
 .submenu-item {
-  border-left: 2px solid #e9ecef;
+  /* border-left: 2px solid #e9ecef; Remove vertical line */
   margin-left: 1rem;
 }
 
@@ -233,11 +233,18 @@
   text-decoration: none;
   font-size: 0.9rem;
   transition: all 0.2s ease;
+  border-radius: 8px; /* Add border radius for active state background if needed */
 }
 
 .submenu-link:hover {
-  background-color: #ffffff;
-  color: #495057;
+  background-color: rgba(0, 144, 136, 0.08);
+  color: #009088;
+}
+
+.submenu-link.active {
+  color: #009088;
+  font-weight: 500;
+  background-color: rgba(0, 144, 136, 0.1); /* Subtle background for active state */
 }
 
 /* Main Content */
@@ -464,21 +471,27 @@
   background: #a1a1a1;
 }
 
-/* Animation for submenu */
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.submenu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out; /* Faster and smoother transition */
 }
 
+.submenu-open .submenu {
+  max-height: 200px;
+}
+
+/* ... skipped unchanged lines ... */
+
+/* Animation for submenu - Removed for subtle effect */
+/* @keyframes slideDown was removed */
+
 .submenu {
-  animation: slideDown 0.3s ease;
+  animation: none; /* Explicitly remove animation */
 }
 
 

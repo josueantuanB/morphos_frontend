@@ -1,0 +1,28 @@
+<header class="page-header">
+  <div class="page-header__title-section">
+    <i class="page-header__icon {{ icon() }}"></i>
+    <h1 class="page-header__title">{{ title() }}</h1>
+  </div>
+  <div class="page-header__actions">
+    @if (showDateSelector()) {
+      <p-select 
+        [options]="dateOptions" 
+        [(ngModel)]="selectedDate"
+        optionLabel="label"
+        optionValue="value"
+        class="page-header__date-selector">
+        <ng-template #selectedItem let-selectedOption>
+          <div class="date-selector-content">
+            <i class="icon-calendar"></i>
+            <span>{{ selectedOption?.label }}</span>
+          </div>
+        </ng-template>
+      </p-select>
+    }
+    <p-button 
+      [label]="buttonLabel()" 
+      icon="icon-plus"
+      styleClass="button-new-user"
+      (click)="onNewUserClick()" />
+  </div>
+</header>

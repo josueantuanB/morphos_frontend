@@ -1,0 +1,49 @@
+.forms-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+.forms-header__title-section {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.forms-header__icon {
+  width: 24px;
+  height: 24px;
+  background-color: var(--color-text-primary);
+  display: inline-block;
+  -webkit-mask: url('/icons/formulario.svg') no-repeat center;
+  mask: url('/icons/formulario.svg') no-repeat center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.forms-header__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.forms-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+::ng-deep .btn-create-form {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  border-radius: var(--border-radius-md) !important;
+}
+
+::ng-deep .btn-create-form:hover {
+  background-color: var(--color-primary-hover) !important;
+  border-color: var(--color-primary-hover) !important;
+}

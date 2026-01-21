@@ -1,57 +1,7 @@
-.form-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
+/* ===================================
+   Auth Form Component - Estilos específicos
+   Los estilos base están en styles.css
+   =================================== */
 
-.forget-password-container {
-  margin-bottom: 1.5rem;
-}
-
-.forget-link {
-  color: #009088;
-  font-size: 0.875rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.25rem;
-  letter-spacing: -0.0175rem;
-  cursor: pointer;
-}
-
-.forget-link:hover {
-  text-decoration: underline;
-}
-
-::ng-deep .custom-btn {
-  border-radius: 0.625rem !important;
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.5rem;
-  letter-spacing: -0.01rem;
-}
-
-.container-input {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.password-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-
-::ng-deep .p-button-label {
-    font-family: Inter;
-    font-size: 1rem;
-    font-style: normal;
-    font-weight: 400 !important;
-    line-height: 1.5rem;
-    letter-spacing: -0.01rem;
-}
-
-.error-message {
-  margin-bottom: 1.3rem;
-}
+/* No hay estilos específicos adicionales necesarios.
+   Todo se maneja desde los estilos globales. */

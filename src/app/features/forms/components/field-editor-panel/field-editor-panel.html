@@ -1,0 +1,94 @@
+@if (visible()) {
+  <div class="field-editor-inline">
+    <!-- Header -->
+    <header class="field-editor__header">
+      <div class="field-editor__type">
+        <div class="type-icon" [style.background-color]="fieldTypeMeta().color">
+          <i [class]="fieldTypeMeta().icon"></i>
+        </div>
+        <span class="type-label">{{ fieldTypeMeta().label }}</span>
+        <button class="help-btn" title="Ayuda">
+          <i class="pi pi-question-circle"></i>
+        </button>
+      </div>
+      <div class="field-editor__actions">
+        <div class="required-toggle">
+          <span>Requerida</span>
+          <p-toggleswitch [(ngModel)]="isRequired"></p-toggleswitch>
+        </div>
+        <p-button 
+          label="Guardar bloque" 
+          styleClass="btn-save-block"
+          [disabled]="!fieldName()"
+          (click)="saveField()" />
+      </div>
+    </header>
+
+    <!-- Content -->
+    <div class="field-editor__content">
+      <div class="form-field">
+        <label class="form-label">Nombre del campo</label>
+        <input 
+          pInputText 
+          [ngModel]="fieldName()"
+          (ngModelChange)="fieldName.set($event)"
+          placeholder="Escribe un título para el campo" 
+          class="form-input" />
+      </div>
+
+      <div class="form-field">
+        <label class="form-label">Descripción (Opcional)</label>
+        <input 
+          pInputText 
+          [ngModel]="fieldDescription()"
+          (ngModelChange)="fieldDescription.set($event)"
+          placeholder="Escribe una breve descripción para dar contexto al campo" 
+          class="form-input" />
+      </div>
+
+      @if (showOptionsEditor()) {
+        <div class="form-field">
+          <label class="form-label">Opciones</label>
+          <div class="options-list">
+            @for (option of options(); track $index; let i = $index) {
+              <div class="option-row">
+                <span class="option-number">{{ i + 1 }}</span>
+                <input 
+                  pInputText 
+                  [ngModel]="option"
+                  (ngModelChange)="updateOption(i, $event)"
+                  placeholder="Escribe una opción" 
+                  class="option-input" />
+                <button 
+                  class="option-remove" 
+                  (click)="removeOption(i)"
+                  [disabled]="options().length <= 1">
+                  <i class="pi pi-times"></i>
+                </button>
+              </div>
+            }
+            <button class="add-option-btn" (click)="addOption()">
+              <i class="pi pi-plus"></i>
+              <span>Agregar opción</span>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Footer -->
+    <footer class="field-editor__footer">
+      <p-button 
+        label="Cancelar" 
+        [outlined]="true"
+        severity="secondary"
+        (click)="cancel()" />
+      <p-button 
+        label="Agregar otra pregunta" 
+        icon="pi pi-plus"
+        styleClass="btn-add-another"
+        [disabled]="!fieldName()"
+        (click)="onAddAnother()" />
+    </footer>
+  </div>
+}

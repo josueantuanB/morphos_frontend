@@ -1,0 +1,131 @@
+<app-menu>
+<div class="create-form-page">
+  <!-- Header - Style like users/roles pages -->
+  <header class="page-header">
+    <div class="page-header__title-section">
+      <button class="back-button" (click)="goBack()">
+        <i class="icon-arrow-left"></i>
+      </button>
+      <h1 class="page-header__title">Nuevo formulario</h1>
+    </div>
+    <div class="page-header__actions">
+      <p-button 
+        label="Guardar borrador" 
+        icon="icon-pencil"
+        [outlined]="true"
+        severity="secondary"
+        styleClass="btn-draft"
+        (click)="saveDraft()" />
+      <p-button 
+        label="Guardar formulario" 
+        icon="icon-save"
+        styleClass="btn-save-form"
+        (click)="saveForm()" />
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="create-form-content">
+    <!-- Canvas Area -->
+    <main class="form-canvas">
+      @if (showFieldEditor()) {
+        <!-- Field Editor Panel - Inline -->
+        <app-field-editor-panel
+          [(visible)]="showFieldEditor"
+          [fieldType]="selectedFieldType()"
+          (fieldSaved)="onFieldSaved($event)"
+          (addAnotherField)="onAddAnotherField()">
+        </app-field-editor-panel>
+      } @else if (blocks().length === 0) {
+        <div class="empty-state">
+          <div class="empty-state__illustration">
+            <div class="block-preview">
+              <div class="block-preview__item">
+                <span class="block-icon">+</span>
+                <div class="block-lines">
+                  <div class="line line--short"></div>
+                  <div class="line line--medium"></div>
+                </div>
+              </div>
+              <div class="block-preview__item block-preview__item--offset">
+                <span class="block-icon">+</span>
+                <div class="block-lines">
+                  <div class="line line--short"></div>
+                  <div class="line line--long"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h2 class="empty-state__title">Agrega tu primer bloque</h2>
+          <p class="empty-state__description">
+            Comienza a construir tu tarea agregando el primer bloque de preguntas. 
+            Necesitas al menos un bloque para crear un formulario.
+          </p>
+        </div>
+      } @else {
+        <div class="blocks-list">
+          @for (block of blocks(); track block.id; let i = $index) {
+            <div class="block-card">
+              <div class="block-card__header">
+                <div class="block-card__type" [style.background-color]="getFieldTypeColor(block.type)">
+                  <span>{{ i + 1 }}</span>
+                </div>
+                <div class="block-card__info">
+                  <span class="block-card__type-label">{{ getFieldTypeLabel(block.type) }}</span>
+                  <span class="block-card__name">{{ block.name }}</span>
+                </div>
+                <div class="block-card__actions">
+                  @if (block.required) {
+                    <span class="required-badge">Requerido</span>
+                  }
+                  <button class="block-action-btn" (click)="removeBlock(block.id)">
+                    <i class="pi pi-trash"></i>
+                  </button>
+                </div>
+              </div>
+              @if (block.description) {
+                <p class="block-card__description">{{ block.description }}</p>
+              }
+              @if (block.options && block.options.length > 0) {
+                <div class="block-card__options">
+                  @for (opt of block.options; track opt) {
+                    <span class="block-option">{{ opt }}</span>
+                  }
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="form-sidebar">
+      <h2 class="sidebar-title">{{ formTitle() }}</h2>
+
+      <!-- Sidebar blocks list -->
+      @if (blocks().length > 0) {
+        <div class="sidebar-blocks">
+          @for (block of blocks(); track block.id; let i = $index) {
+            <div class="sidebar-block-item">
+              <div class="sidebar-block-num" [style.background-color]="getFieldTypeColor(block.type)">{{ i + 1 }}</div>
+              <span class="sidebar-block-name">{{ block.name }}</span>
+            </div>
+          }
+        </div>
+      }
+
+      <button class="add-block-btn" (click)="addBlock()">
+        <i class="pi pi-plus"></i>
+        <span>Nuevo bloque</span>
+      </button>
+    </aside>
+  </div>
+</div>
+</app-menu>
+
+<!-- Modals -->
+<app-field-type-selector 
+  [(visible)]="showTypeSelector"
+  (typeSelected)="onTypeSelected($event)">
+</app-field-type-selector>

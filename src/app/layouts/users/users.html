@@ -1,3 +1,7 @@
 <app-menu>
-  <p>users works!</p>
+  <div class="page-users">
+    <app-users-header title="Usuarios" (newUserClick)="onNewUser()"></app-users-header>
+    <app-users-stats-cards [stats]="stats()"></app-users-stats-cards>
+    <app-users-table [users]="users()" (assignClick)="onAssignUsers($event)"></app-users-table>
+  </div>
 </app-menu>

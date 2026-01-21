@@ -1,0 +1,100 @@
+<section class="forms-table-section">
+  <h2 class="forms-table-section__title">Tus formularios</h2>
+  
+  <div class="forms-table-container">
+    <!-- Toolbar -->
+    <div class="forms-table__toolbar">
+      <div class="forms-table__search-section">
+        <div class="forms-table__search-wrapper">
+          <i class="forms-table__search-icon"></i>
+          <input 
+            pInputText 
+            type="text" 
+            [(ngModel)]="searchQuery" 
+            placeholder="Buscar formulario..." 
+            class="forms-table__search-input" />
+        </div>
+        <p-select 
+          [options]="filterOptions" 
+          [(ngModel)]="selectedFilter"
+          optionLabel="label"
+          optionValue="value"
+          class="forms-table__filter" />
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="forms-table__wrapper">
+      <table class="forms-table">
+        <thead class="forms-table__head">
+          <tr>
+            <th class="forms-table__cell forms-table__cell--checkbox">
+              <p-checkbox [binary]="true"></p-checkbox>
+            </th>
+            <th class="forms-table__cell">Nombre</th>
+            <th class="forms-table__cell">Fecha de creación</th>
+            <th class="forms-table__cell">Fecha de vencimiento</th>
+            <th class="forms-table__cell">Estado</th>
+            <th class="forms-table__cell forms-table__cell--actions"></th>
+          </tr>
+        </thead>
+        <tbody class="forms-table__body">
+          @for (form of forms(); track form.id) {
+            <tr>
+              <td class="forms-table__cell forms-table__cell--checkbox">
+                <p-checkbox [binary]="true"></p-checkbox>
+              </td>
+              <td class="forms-table__cell forms-table__cell--name">
+                <div class="form-name">
+                  <span class="form-name__title">{{ form.name }}</span>
+                  <span class="form-name__description">{{ form.description }}</span>
+                </div>
+              </td>
+              <td class="forms-table__cell">{{ form.createdAt }}</td>
+              <td class="forms-table__cell">{{ form.dueDate }}</td>
+              <td class="forms-table__cell">
+                <span class="status-badge" [class]="'status-badge--' + form.status">
+                  {{ form.status === 'published' ? 'Publicado' : 'Borrador' }}
+                </span>
+              </td>
+              <td class="forms-table__cell forms-table__cell--actions">
+                <p-button 
+                  [text]="true"
+                  severity="secondary"
+                  size="small"
+                  (click)="setSelectedForm(form); menu.toggle($event)">
+                  <img src="/icons/points_menu.svg" alt="Opciones" class="action-icon" />
+                </p-button>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6" class="forms-table__empty">No hay formularios disponibles</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="forms-table__pagination">
+      <p-button 
+        label="Anterior" 
+        [outlined]="true"
+        severity="secondary"
+        size="small"
+        [disabled]="currentPage() === 1"
+        (click)="previousPage()" />
+      <span class="forms-table__pagination-info">Página {{ currentPage() }} de {{ totalPages }}</span>
+      <p-button 
+        label="Siguiente" 
+        [outlined]="true"
+        severity="secondary"
+        size="small"
+        [disabled]="currentPage() === totalPages"
+        (click)="nextPage()" />
+    </div>
+  </div>
+</section>
+
+<p-menu #menu [model]="menuItems" [popup]="true" appendTo="body"></p-menu>

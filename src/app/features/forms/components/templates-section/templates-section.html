@@ -1,0 +1,25 @@
+<section class="templates-section">
+  <div class="templates-section__header">
+    <h2 class="templates-section__title">Plantillas prediseñadas</h2>
+    <p class="templates-section__description">Elige una plantilla para ahorrar tiempo y personalízala según tus necesidades.</p>
+  </div>
+  
+  <div class="templates-section__grid">
+    @for (template of templates(); track template.id) {
+      <div class="template-card" (click)="onTemplateClick(template)">
+        <div class="template-card__icon" [class]="'template-card__icon--' + template.color">
+          <i class="icon-formulario-small"></i>
+        </div>
+        <div class="template-card__content">
+          <h3 class="template-card__title">{{ template.title }}</h3>
+          <p class="template-card__description">{{ template.description }}</p>
+        </div>
+      </div>
+    }
+    
+    <div class="template-card template-card--more" (click)="onViewAllTemplates()">
+      <span class="template-card__count">+{{ totalTemplates }}</span>
+      <span class="template-card__link">Ver todas las plantillas</span>
+    </div>
+  </div>
+</section>

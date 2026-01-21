@@ -1,0 +1,129 @@
+.create-role-dialog {
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+}
+
+.role-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  padding-top: var(--spacing-sm);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.form-label {
+  font-weight: 500;
+  color: var(--color-text-primary);
+  font-size: 0.95rem;
+}
+
+.name-input {
+  width: 100%;
+}
+
+.permissions-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.permissions-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.permissions-subtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.permissions-container {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.module-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.module-group:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.module-name {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.scopes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--spacing-sm);
+}
+
+.scope-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.scope-label {
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+  padding-top: var(--spacing-md);
+}
+
+::ng-deep .save-button {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+}
+
+::ng-deep .save-button:hover {
+  background-color: var(--color-primary-hover) !important;
+  border-color: var(--color-primary-hover) !important;
+}
+
+/* Scrollbar Styling */
+.permissions-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.permissions-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.permissions-container::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 3px;
+}

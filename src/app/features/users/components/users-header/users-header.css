@@ -1,0 +1,137 @@
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+.page-header__title-section {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-shrink: 0;
+}
+
+.page-header__icon {
+  width: 24px;
+  height: 24px;
+  background-color: var(--color-text-primary);
+  display: inline-block;
+}
+
+/* Icono de usuarios usando CSS mask */
+.page-header__icon.icon-usuarios {
+  -webkit-mask: url('/icons/usuarios.svg') no-repeat center;
+  mask: url('/icons/usuarios.svg') no-repeat center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* Icono de Roles y Permisos */
+.page-header__icon.icon-lock-keyhole {
+  -webkit-mask: url('/icons/lock-keyhole.svg') no-repeat center;
+  mask: url('/icons/lock-keyhole.svg') no-repeat center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.page-header__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+  text-align: left;
+}
+
+.page-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.page-header__date-selector {
+  min-width: 100px;
+}
+
+.date-selector-content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.date-selector-content .icon-calendar {
+  width: 16px;
+  height: 16px;
+  background-color: var(--color-text-secondary);
+  -webkit-mask: url('/icons/calendar.svg') no-repeat center;
+  mask: url('/icons/calendar.svg') no-repeat center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* Botón Nuevo Usuario */
+::ng-deep .button-new-user {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  border-radius: var(--border-radius-md) !important;
+  color: #ffffff !important;
+  white-space: nowrap;
+}
+
+::ng-deep .button-new-user:hover {
+  background-color: var(--color-primary-hover) !important;
+  border-color: var(--color-primary-hover) !important;
+}
+
+::ng-deep .button-new-user .p-button-label {
+  font-weight: 500;
+}
+
+/* Icono plus personalizado */
+::ng-deep .icon-plus {
+  width: 1rem;
+  height: 1rem;
+  background-color: #ffffff;
+  -webkit-mask: url('/icons/plus.svg') no-repeat center;
+  mask: url('/icons/plus.svg') no-repeat center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* Responsive - Tablet */
+@media (max-width: 900px) {
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .page-header__actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 480px) {
+  .page-header__title {
+    font-size: 1.1rem;
+  }
+  
+  .page-header__actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-sm);
+  }
+
+  .page-header__date-selector {
+    width: 100%;
+  }
+
+  ::ng-deep .button-new-user {
+    width: 100%;
+    justify-content: center;
+  }
+}

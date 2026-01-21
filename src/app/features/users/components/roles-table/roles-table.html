@@ -1,0 +1,60 @@
+<div class="roles-table-container">
+  <!-- Toolbar -->
+  <div class="roles-table__toolbar">
+    <div class="roles-table__search-section">
+      <span class="roles-table__search-wrapper">
+        <i class="roles-table__search-icon"></i>
+        <input 
+          type="text" 
+          pInputText 
+          placeholder="Buscar rol..."
+          class="roles-table__search-input"
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="searchQuery.set($event)" />
+      </span>
+    </div>
+
+  </div>
+
+  <!-- Table -->
+  <div class="roles-table__wrapper">
+    <table class="roles-table">
+      <thead class="roles-table__head">
+        <tr>
+          <th class="roles-table__cell">ID</th>
+          <th class="roles-table__cell">Nombre del Rol</th>
+          <th class="roles-table__cell">Descripción</th>
+          <th class="roles-table__cell">Usuarios Activos</th>
+          <th class="roles-table__cell roles-table__cell--actions">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="roles-table__body">
+        @for (role of roles(); track role.id) {
+          <tr class="roles-table__row">
+            <td class="roles-table__cell roles-table__cell--code">{{ role.id }}</td>
+            <td class="roles-table__cell roles-table__cell--name">{{ role.name }}</td>
+            <td class="roles-table__cell">{{ role.description }}</td>
+            <td class="roles-table__cell">{{ role.activeUsers }}</td>
+            <td class="roles-table__cell roles-table__cell--actions">
+              <p-button 
+                [text]="true"
+                severity="secondary"
+                size="small"
+                (click)="setSelectedRole(role); menu.toggle($event)">
+                <img src="/icons/points_menu.svg" alt="Opciones" class="action-icon" />
+              </p-button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5" class="roles-table__empty">
+              No se encontraron roles
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  
+  <p-menu #menu [model]="items" [popup]="true" appendTo="body"></p-menu>
+</div>

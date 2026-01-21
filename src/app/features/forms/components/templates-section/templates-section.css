@@ -1,0 +1,141 @@
+.templates-section {
+  background: var(--color-background-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.templates-section__header {
+  margin-bottom: var(--spacing-lg);
+}
+
+.templates-section__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 4px 0;
+}
+
+.templates-section__description {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.templates-section__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-md);
+}
+
+@media (max-width: 1200px) {
+  .templates-section__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .templates-section__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.template-card {
+  background: var(--color-background-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.template-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 2px 8px rgba(0, 144, 136, 0.1);
+}
+
+.template-card__icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.template-card__icon--blue {
+  background-color: #EFF8FF;
+}
+
+.template-card__icon--blue .icon-formulario-small {
+  background-color: #175CD3;
+}
+
+.template-card__icon--purple {
+  background-color: #F4F3FF;
+}
+
+.template-card__icon--purple .icon-formulario-small {
+  background-color: #6938EF;
+}
+
+.template-card__icon--orange {
+  background-color: #FFF6ED;
+}
+
+.template-card__icon--orange .icon-formulario-small {
+  background-color: #EC4A0A;
+}
+
+.icon-formulario-small {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  -webkit-mask: url('/icons/formulario.svg') no-repeat center;
+  mask: url('/icons/formulario.svg') no-repeat center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.template-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.template-card__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.template-card__description {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* More templates card */
+.template-card--more {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 4px;
+}
+
+.template-card__count {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.template-card__link {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}

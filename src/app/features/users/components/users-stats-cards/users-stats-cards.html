@@ -1,0 +1,35 @@
+<div class="stats-cards-container">
+  <!-- Card de Usuarios -->
+  <div class="stats-card stats-card--users">
+    <div class="stats-card__header">
+      <span class="stats-card__title">Usuarios</span>
+    </div>
+    <div class="stats-card__value">{{ stats().total }}</div>
+    <div class="stats-card__details">
+      <div class="stats-card__detail-item">
+        <span class="stats-card__indicator stats-card__indicator--active"></span>
+        <span class="stats-card__detail-label">Usuarios activos</span>
+        <span class="stats-card__detail-value">{{ stats().active }}</span>
+      </div>
+      <div class="stats-card__detail-item">
+        <span class="stats-card__indicator stats-card__indicator--inactive"></span>
+        <span class="stats-card__detail-label">Usuarios inactivos</span>
+        <span class="stats-card__detail-value">{{ stats().inactive }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card de Rendimiento -->
+  <div class="stats-card stats-card--performance">
+    <div class="stats-card__header">
+      <span class="stats-card__title">Rendimiento</span>
+    </div>
+    <div class="stats-card__value">
+      @if (stats().performance !== null) {
+        {{ stats().performance }}%
+      } @else {
+        -
+      }
+    </div>
+  </div>
+</div>
