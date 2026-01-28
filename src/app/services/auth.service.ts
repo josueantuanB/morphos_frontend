@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { LoginInterface } from '../models/login.interface';
-import { LoginRootInterface } from '../models/login.root.interface';
-import { LoginResponse } from '../models/login.response.interface';
+import { LoginInterface } from '../features/auth/models/login.interface';
+import { LoginRootInterface } from '../features/auth/models/login.root.interface';
+import { LoginResponse } from '../features/auth/models/login.response.interface';
 import { tap } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -19,26 +19,26 @@ export class AuthService {
 
   login(loginData: LoginInterface) {
     return this.http.post<LoginResponse>(`${this.apiUrl}/authentication/login-user`, loginData)
-    .pipe(
-      tap( resp => {
-        this.cookieService.set('accessToken', resp.accessToken, 1, '/','',false,'Strict');
-        this.cookieService.set('refreshToken', resp.refreshToken, 1, '/','',false,'Strict');
-        // Guardar datos del usuario
-        this.cookieService.set('userData', JSON.stringify(resp.data), 1, '/','',false,'Strict');
-      })
-    );
+      .pipe(
+        tap(resp => {
+          this.cookieService.set('accessToken', resp.accessToken, 1, '/', '', false, 'Strict');
+          this.cookieService.set('refreshToken', resp.refreshToken, 1, '/', '', false, 'Strict');
+          // Guardar datos del usuario
+          this.cookieService.set('userData', JSON.stringify(resp.data), 1, '/', '', false, 'Strict');
+        })
+      );
   }
 
-   loginRootUser(loginData: LoginRootInterface) {
+  loginRootUser(loginData: LoginRootInterface) {
     return this.http.post<LoginResponse>(`${this.apiUrl}/authentication/login`, loginData)
-    .pipe(
-      tap( resp => {
-        this.cookieService.set('accessToken', resp.accessToken, 1, '/','',false,'Strict');
-        this.cookieService.set('refreshToken', resp.refreshToken, 1, '/','',false,'Strict');
-        // Guardar datos del usuario
-        this.cookieService.set('userData', JSON.stringify(resp.data), 1, '/','',false,'Strict');
-      })
-    );
+      .pipe(
+        tap(resp => {
+          this.cookieService.set('accessToken', resp.accessToken, 1, '/', '', false, 'Strict');
+          this.cookieService.set('refreshToken', resp.refreshToken, 1, '/', '', false, 'Strict');
+          // Guardar datos del usuario
+          this.cookieService.set('userData', JSON.stringify(resp.data), 1, '/', '', false, 'Strict');
+        })
+      );
   }
 
   // Verificar si el usuario está autenticado

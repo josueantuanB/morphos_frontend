@@ -1,46 +1,57 @@
-<p-dialog 
-  header="Nuevo Rol" 
-  [(visible)]="visible" 
-  [modal]="true" 
-  [style]="{ width: '700px', maxWidth: '90vw' }"
-  [draggable]="false" 
-  [resizable]="false"
-  styleClass="create-role-dialog">
-  
+<p-dialog [header]="dialogTitle()" [(visible)]="visible" [modal]="true" [style]="{ width: '700px', maxWidth: '90vw' }"
+  [draggable]="false" [resizable]="false" styleClass="create-role-dialog">
+
+
   <div class="role-form">
     <!-- Role Name Input -->
     <div class="form-field">
       <label for="roleName" class="form-label">Nombre del Rol</label>
-      <input 
-        pInputText 
-        id="roleName" 
-        [(ngModel)]="roleName" 
-        placeholder="Ej. Administrador de Usuarios" 
-        class="name-input" />
+      <input pInputText id="roleName" [value]="roleName()" (input)="roleName.set($any($event.target).value)"
+        placeholder="Ej. Administrador de Usuarios" class="name-input" />
+    </div>
+
+    <!-- Role Description Input -->
+    <div class="form-field">
+      <label for="roleDescription" class="form-label">Descripción</label>
+      <input pInputText id="roleDescription" [value]="roleDescription()"
+        (input)="roleDescription.set($any($event.target).value)"
+        placeholder="Describe las responsabilidades de este rol" class="name-input" />
     </div>
 
     <!-- Permissions List -->
     <div class="permissions-section">
       <h3 class="permissions-title">Permisos</h3>
       <p class="permissions-subtitle">Selecciona los permisos que tendrá este rol</p>
-      
+
       <div class="permissions-container">
-        @for (module of permissions(); track module.name) {
-          <div class="module-group">
-            <h4 class="module-name">{{ module.name }}</h4>
-            <div class="scopes-grid">
-              @for (scope of module.scopes; track scope.id) {
-                <div class="scope-item">
-                  <p-checkbox 
-                    [binary]="true" 
-                    [(ngModel)]="scope.selected" 
-                    [inputId]="scope.id">
-                  </p-checkbox>
-                  <label [for]="scope.id" class="scope-label">{{ scope.name }}</label>
-                </div>
-              }
+        @if (isLoadingPermissions()) {
+        @for (i of [1,2,3]; track i) {
+        <div class="module-group">
+          <p-skeleton width="8rem" height="1.2rem" styleClass="mb-2"></p-skeleton>
+          <div class="scopes-grid">
+            @for (j of [1,2,3,4]; track j) {
+            <div class="scope-item">
+              <p-skeleton width="100%" height="1.5rem"></p-skeleton>
             </div>
+            }
           </div>
+        </div>
+        }
+        } @else {
+        @for (module of permissions(); track module.name) {
+        <div class="module-group">
+          <h4 class="module-name">{{ module.name }}</h4>
+          <div class="scopes-grid">
+            @for (scope of module.scopes; track scope.id) {
+            <div class="scope-item">
+              <p-checkbox [binary]="true" [(ngModel)]="scope.selected" [inputId]="scope.id">
+              </p-checkbox>
+              <label [for]="scope.id" class="scope-label">{{ scope.name }}</label>
+            </div>
+            }
+          </div>
+        </div>
+        }
         }
       </div>
     </div>
@@ -48,17 +59,11 @@
 
   <ng-template pTemplate="footer">
     <div class="dialog-footer">
-      <p-button 
-        label="Cancelar" 
-        (click)="cancel()" 
-        [text]="true" 
-        severity="secondary" />
-      <p-button 
-        label="Guardar Rol" 
-        (click)="save()" 
-        [disabled]="!roleName()" 
-        icon="pi pi-check" 
-        styleClass="save-button" />
+      <p-button label="Cancelar" (click)="cancel()" [text]="true" severity="secondary" [disabled]="isSaving()" />
+      <p-button [label]="isSaving() ? 'Guardando...' : 'Guardar Rol'" (click)="save()"
+        [disabled]="!roleName() || !roleDescription() || !hasSelectedScopes() || isSaving()" [loading]="isSaving()"
+        styleClass="save-button">
+      </p-button>
     </div>
   </ng-template>
 </p-dialog>

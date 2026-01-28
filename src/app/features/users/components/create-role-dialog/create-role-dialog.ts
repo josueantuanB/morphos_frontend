@@ -1,10 +1,14 @@
-import { Component, model, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, model, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
+import { SkeletonModule } from 'primeng/skeleton';
+import { MessageService } from 'primeng/api';
+import { ScopeService } from '../../../../services/scope.service';
+import { RoleService } from '../../../../services/role.service';
 
 interface PermissionScope {
   id: string;
@@ -18,84 +22,145 @@ interface ModulePermissions {
   scopes: PermissionScope[];
 }
 
+export interface RoleData {
+  rolId: string;
+  rolName: string;
+  rolDescription: string;
+  scopes: { scoId: string }[];
+}
+
 @Component({
   selector: 'app-create-role-dialog',
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    DialogModule, 
-    ButtonModule, 
-    InputTextModule, 
-    CheckboxModule
+    CommonModule,
+    FormsModule,
+    DialogModule,
+    ButtonModule,
+    InputTextModule,
+    CheckboxModule,
+    SkeletonModule
   ],
   templateUrl: './create-role-dialog.html',
   styleUrl: './create-role-dialog.css'
 })
 export class CreateRoleDialog {
   visible = model<boolean>(false);
-  roleName = signal('');
+  roleToEdit = input<RoleData | null>(null);
 
-  permissions = signal<ModulePermissions[]>([
-    {
-      name: 'Usuarios',
-      scopes: [
-        { id: 'usr_view', name: 'Ver listado', code: 'users.read', selected: false },
-        { id: 'usr_create', name: 'Crear usuario', code: 'users.create', selected: false },
-        { id: 'usr_edit', name: 'Editar usuario', code: 'users.update', selected: false },
-        { id: 'usr_delete', name: 'Eliminar usuario', code: 'users.delete', selected: false },
-        { id: 'usr_export', name: 'Exportar data', code: 'users.export', selected: false }
-      ]
-    },
-    {
-      name: 'Roles y Permisos',
-      scopes: [
-        { id: 'role_view', name: 'Ver roles', code: 'roles.read', selected: false },
-        { id: 'role_create', name: 'Crear rol', code: 'roles.create', selected: false },
-        { id: 'role_edit', name: 'Editar rol', code: 'roles.update', selected: false },
-        { id: 'role_delete', name: 'Eliminar rol', code: 'roles.delete', selected: false }
-      ]
-    },
-    {
-      name: 'Reportes',
-      scopes: [
-        { id: 'rep_view', name: 'Ver reportes', code: 'reports.read', selected: false },
-        { id: 'rep_export', name: 'Descargar reportes', code: 'reports.export', selected: false }
-      ]
-    },
-    {
-      name: 'Estados de Cuenta',
-      scopes: [
-        { id: 'st_view', name: 'Ver estados', code: 'statements.read', selected: false },
-        { id: 'st_hist', name: 'Ver historial', code: 'statements.history', selected: false }
-      ]
-    },
-    {
-      name: 'Formularios',
-      scopes: [
-        { id: 'frm_view', name: 'Ver formularios', code: 'forms.read', selected: false },
-        { id: 'frm_manage', name: 'Gestionar respuestas', code: 'forms.manage', selected: false }
-      ]
-    },
-    {
-      name: 'Configuración',
-      scopes: [
-        { id: 'cfg_view', name: 'Ver configuración', code: 'config.read', selected: false },
-        { id: 'cfg_edit', name: 'Editar configuración', code: 'config.update', selected: false }
-      ]
-    }
-  ]);
+  roleName = signal('');
+  roleDescription = signal('');
+  permissions = signal<ModulePermissions[]>([]);
+  isLoadingPermissions = signal(false);
+  isSaving = signal(false);
+  roleCreated = output<void>();
+
+  isEditMode = computed(() => this.roleToEdit() !== null);
+  dialogTitle = computed(() => this.isEditMode() ? 'Editar Rol' : 'Nuevo Rol');
+
+  private scopeService = inject(ScopeService);
+  private roleService = inject(RoleService);
+  private messageService = inject(MessageService);
+
+  hasSelectedScopes(): boolean {
+    return this.permissions().some(module =>
+      module.scopes.some(scope => scope.selected)
+    );
+  }
+
+  constructor() {
+    effect(() => {
+      if (this.visible()) {
+        this.loadPermissions();
+      }
+    });
+  }
+
+  private loadPermissions() {
+    this.isLoadingPermissions.set(true);
+    this.scopeService.getAllCategoriesAndScopes().subscribe({
+      next: (resp: any) => {
+        const roleData = this.roleToEdit();
+        const selectedScopeIds = roleData?.scopes.map(s => s.scoId) || [];
+
+        this.permissions.set(
+          resp.data.map((category: any) => ({
+            name: category.catName,
+            scopes: category.scopes.map((scope: any) => ({
+              id: scope.scoId,
+              name: scope.scoDescription,
+              code: scope.scoName,
+              selected: selectedScopeIds.includes(scope.scoId)
+            }))
+          }))
+        );
+
+        if (roleData) {
+          this.roleName.set(roleData.rolName);
+          this.roleDescription.set(roleData.rolDescription);
+        }
+
+        this.isLoadingPermissions.set(false);
+      },
+      error: () => {
+        this.isLoadingPermissions.set(false);
+      }
+    });
+  }
 
   save() {
-    console.log('Role Name:', this.roleName());
-    console.log('Permissions:', this.permissions());
-    this.visible.set(false);
-    this.roleName.set('');
-    // Reset permissions
-    this.permissions().forEach(module => module.scopes.forEach(s => s.selected = false));
+    if (this.isSaving()) return;
+
+    const selectedScopes = this.permissions()
+      .flatMap(module => module.scopes)
+      .filter(scope => scope.selected)
+      .map(scope => scope.id);
+
+    this.isSaving.set(true);
+
+    const request$ = this.isEditMode()
+      ? this.roleService.updateRole({
+        rolId: this.roleToEdit()!.rolId,
+        rolName: this.roleName(),
+        rolDescription: this.roleDescription(),
+        scopes: selectedScopes
+      })
+      : this.roleService.saveRole({
+        rolName: this.roleName(),
+        rolDescription: this.roleDescription(),
+        scopes: selectedScopes
+      });
+
+    request$.subscribe({
+      next: () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Éxito',
+          detail: this.isEditMode() ? 'Rol actualizado exitosamente' : 'Rol creado exitosamente'
+        });
+        this.closeAndReset();
+        this.roleCreated.emit();
+      },
+      error: (error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.error?.message || `Error al ${this.isEditMode() ? 'actualizar' : 'crear'} el rol.`
+        });
+        this.isSaving.set(false);
+      }
+    });
   }
 
   cancel() {
+    this.closeAndReset();
+  }
+
+  private closeAndReset() {
     this.visible.set(false);
+    this.roleName.set('');
+    this.roleDescription.set('');
+    this.permissions().forEach(module => module.scopes.forEach(s => s.selected = false));
+    this.isSaving.set(false);
   }
 }

@@ -7,7 +7,7 @@ import { FloatLabel } from 'primeng/floatlabel';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../../services/auth.service';
 import { Router } from '@angular/router';
 import { LoginInterface } from '../../models/login.interface';
 import { LoginRootInterface } from '../../models/login.root.interface';
@@ -31,7 +31,7 @@ export class AuthAdminForm {
   isLoading = signal(false);
   errorMessage = signal('Error al iniciar sesión');
   hasError = signal(false);
-  
+
   private fb = inject(FormBuilder);
   private confirmationService = inject(ConfirmationService);
   private authService = inject(AuthService);
@@ -52,7 +52,7 @@ export class AuthAdminForm {
 
     this.isLoading.set(true);
 
-     this.authService.loginRootUser(this.loginForm.value as LoginRootInterface).subscribe({
+    this.authService.loginRootUser(this.loginForm.value as LoginRootInterface).subscribe({
       next: (resp) => {
         this.isLoading.set(false);
         this.router.navigate(['/dashboard']);

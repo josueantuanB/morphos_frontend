@@ -1,7 +1,7 @@
 import { Component, HostListener, signal } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { AuthService } from '../../features/auth/services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -42,7 +42,7 @@ export class Menu {
         const url = event.url;
         this.currentRoute.set(url);
         this.updatePageTitle(url);
-        
+
         // Auto-expand menus based on route
         if (url.includes('/users')) {
           this.usersOpen.set(true);

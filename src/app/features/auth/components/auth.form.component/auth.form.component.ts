@@ -7,7 +7,7 @@ import { FloatLabel } from 'primeng/floatlabel';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../../services/auth.service';
 import { LoginInterface } from '../../models/login.interface';
 import { Router } from '@angular/router';
 @Component({
@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
     MessageModule,
     ConfirmDialogModule,
     FloatLabel
-],
+  ],
   templateUrl: './auth.form.component.html',
   styleUrl: './auth.form.component.css',
   providers: [ConfirmationService, MessageService],
