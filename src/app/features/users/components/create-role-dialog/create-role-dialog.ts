@@ -156,8 +156,16 @@ export class CreateRoleDialog {
     this.closeAndReset();
   }
 
+  onDialogHide() {
+    this.resetForm();
+  }
+
   private closeAndReset() {
     this.visible.set(false);
+    this.resetForm();
+  }
+
+  private resetForm() {
     this.roleName.set('');
     this.roleDescription.set('');
     this.permissions().forEach(module => module.scopes.forEach(s => s.selected = false));

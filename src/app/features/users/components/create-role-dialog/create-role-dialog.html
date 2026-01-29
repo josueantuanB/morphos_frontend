@@ -1,5 +1,5 @@
 <p-dialog [header]="dialogTitle()" [(visible)]="visible" [modal]="true" [style]="{ width: '700px', maxWidth: '90vw' }"
-  [draggable]="false" [resizable]="false" styleClass="create-role-dialog">
+  [draggable]="false" [resizable]="false" styleClass="create-role-dialog" (onHide)="onDialogHide()">
 
 
   <div class="role-form">
