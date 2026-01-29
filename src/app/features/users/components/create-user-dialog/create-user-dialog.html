@@ -1,0 +1,110 @@
+<p-dialog [header]="dialogTitle()" [(visible)]="visible" [modal]="true" [style]="{ width: '700px', maxWidth: '90vw' }"
+    [draggable]="false" [resizable]="false" styleClass="create-user-dialog" (onHide)="onDialogHide()">
+
+    <div class="user-form">
+
+        <!-- Avatar Upload (Optional) -->
+        <div class="avatar-section">
+            <label class="form-label">Avatar</label>
+            <div class="avatar-wrapper">
+                <div class="avatar-circle">
+                    @if (avatarPreview()) {
+                    <img [src]="avatarPreview()" alt="Avatar preview" class="avatar-image" />
+                    } @else {
+                    <img src="icons/avatar.svg" alt="Avatar" class="avatar-placeholder" />
+                    }
+                </div>
+                <label for="avatarInput" class="camera-button">
+                    <img src="icons/camera.svg" alt="Cambiar foto" class="camera-icon" />
+                </label>
+                <input type="file" id="avatarInput" accept="image/*" class="hidden-input"
+                    (change)="onFileSelected($event)" />
+            </div>
+        </div>
+
+        <!-- Row 1: Nombre y Apellido -->
+        <div class="form-row">
+            <div class="form-field">
+                <label class="form-label">Nombre <span class="required">*</span></label>
+                <input type="text" pInputText class="form-input" placeholder="Ingrese el nombre" [ngModel]="useName()"
+                    (ngModelChange)="useName.set($event)" />
+            </div>
+            <div class="form-field">
+                <label class="form-label">Apellido <span class="required">*</span></label>
+                <input type="text" pInputText class="form-input" placeholder="Ingrese el apellido"
+                    [ngModel]="useLastName()" (ngModelChange)="useLastName.set($event)" />
+            </div>
+        </div>
+
+        <!-- Row 2: Código y Username -->
+        <div class="form-row">
+            <div class="form-field">
+                <label class="form-label">Código</label>
+                <input type="text" pInputText class="form-input" placeholder="Ej: USR-001 (opcional)"
+                    [ngModel]="useCode()" (ngModelChange)="useCode.set($event)" />
+            </div>
+            <div class="form-field">
+                <label class="form-label">Usuario <span class="required">*</span></label>
+                <input type="text" pInputText class="form-input" placeholder="EJ: JUAN_PEREZ" [ngModel]="useUsername()"
+                    (ngModelChange)="setUsername($event)" />
+            </div>
+        </div>
+
+        <!-- Row 3: Password y Teléfono -->
+        <div class="form-row">
+            @if (!isEditMode()) {
+            <div class="form-field">
+                <label class="form-label">Contraseña <span class="required">*</span></label>
+                <div class="password-wrapper">
+                    <input [type]="showPassword() ? 'text' : 'password'" pInputText
+                        class="form-input password-input-field" placeholder="Ingrese contraseña"
+                        [ngModel]="usePassword()" (ngModelChange)="usePassword.set($event)" />
+                    <button type="button" class="password-toggle" (click)="showPassword.set(!showPassword())">
+                        <img [src]="showPassword() ? 'icons/eye-slash.svg' : 'icons/eye.svg'" alt="Toggle password"
+                            class="password-icon" />
+                    </button>
+                </div>
+            </div>
+            }
+            <div class="form-field" [class.full-width]="isEditMode()">
+                <label class="form-label">Teléfono de contacto <span class="required">*</span></label>
+                <input type="text" pInputText class="form-input" placeholder="Número de teléfono"
+                    [ngModel]="useContactNumber()" (ngModelChange)="useContactNumber.set($event)" />
+            </div>
+        </div>
+
+        <!-- Roles Section -->
+        <div class="roles-section">
+            <h3 class="roles-title">Roles <span class="required">*</span></h3>
+            <p class="roles-subtitle">Selecciona al menos un rol para este usuario</p>
+
+            <div class="roles-container">
+                @if (isLoadingRoles()) {
+                @for (i of [1,2,3]; track i) {
+                <div class="role-item">
+                    <p-skeleton width="100%" height="1.5rem"></p-skeleton>
+                </div>
+                }
+                } @else {
+                @for (role of roles(); track role.rolId) {
+                <div class="role-item">
+                    <p-checkbox [binary]="true" [ngModel]="role.selected" (onChange)="toggleRole(role.rolId)"
+                        [inputId]="role.rolId">
+                    </p-checkbox>
+                    <label [for]="role.rolId" class="role-label">{{ role.rolName }}</label>
+                </div>
+                }
+                }
+            </div>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <div class="dialog-footer">
+            <p-button label="Cancelar" (click)="cancel()" [text]="true" severity="secondary" [disabled]="isSaving()" />
+            <p-button [label]="isSaving() ? 'Guardando...' : (isEditMode() ? 'Actualizar' : 'Crear Usuario')"
+                (click)="save()" [disabled]="!canSubmit() || isSaving()" [loading]="isSaving()" icon="pi pi-check"
+                styleClass="save-button" />
+        </div>
+    </ng-template>
+</p-dialog>

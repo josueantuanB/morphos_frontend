@@ -8,7 +8,6 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
     const authService = inject(AuthService);
     const router = inject(Router);
 
-    // Skip interceptor for auth endpoints to avoid infinite loops
     if (req.url.includes('/authentication/')) {
         return next(req);
     }
@@ -18,7 +17,6 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
             if (error.status === 401) {
                 return authService.refreshToken().pipe(
                     switchMap(() => {
-                        // Retry the original request with new token
                         const newToken = authService.getAccessToken();
                         const clonedRequest = req.clone({
                             setHeaders: {
@@ -28,7 +26,6 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
                         return next(clonedRequest);
                     }),
                     catchError((refreshError) => {
-                        // Refresh failed, logout and redirect to login
                         authService.logout();
                         router.navigate(['/login']);
                         return throwError(() => refreshError);

@@ -3,5 +3,7 @@
     <app-users-header title="Usuarios" (newUserClick)="onNewUser()"></app-users-header>
     <app-users-stats-cards [stats]="stats()"></app-users-stats-cards>
     <app-users-table [users]="users()" (assignClick)="onAssignUsers($event)"></app-users-table>
+    <app-create-user-dialog [(visible)]="isCreateUserModalVisible" (userCreated)="onUserCreated()">
+    </app-create-user-dialog>
   </div>
 </app-menu>

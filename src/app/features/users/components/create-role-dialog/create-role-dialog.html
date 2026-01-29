@@ -5,14 +5,14 @@
   <div class="role-form">
     <!-- Role Name Input -->
     <div class="form-field">
-      <label for="roleName" class="form-label">Nombre del Rol</label>
+      <label for="roleName" class="form-label">Nombre del Rol <span class="required">*</span></label>
       <input pInputText id="roleName" [value]="roleName()" (input)="roleName.set($any($event.target).value)"
         placeholder="Ej. Administrador de Usuarios" class="name-input" />
     </div>
 
     <!-- Role Description Input -->
     <div class="form-field">
-      <label for="roleDescription" class="form-label">Descripción</label>
+      <label for="roleDescription" class="form-label">Descripción <span class="required">*</span></label>
       <input pInputText id="roleDescription" [value]="roleDescription()"
         (input)="roleDescription.set($any($event.target).value)"
         placeholder="Describe las responsabilidades de este rol" class="name-input" />
@@ -20,7 +20,7 @@
 
     <!-- Permissions List -->
     <div class="permissions-section">
-      <h3 class="permissions-title">Permisos</h3>
+      <h3 class="permissions-title">Permisos <span class="required">*</span></h3>
       <p class="permissions-subtitle">Selecciona los permisos que tendrá este rol</p>
 
       <div class="permissions-container">

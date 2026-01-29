@@ -1,17 +1,21 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { Menu } from "../menu/menu";
 import { UsersHeader } from "../../features/users/components/users-header/users-header";
 import { UsersStatsCards } from "../../features/users/components/users-stats-cards/users-stats-cards";
 import { UsersTable } from "../../features/users/components/users-table/users-table";
+import { CreateUserDialog } from "../../features/users/components/create-user-dialog/create-user-dialog";
 import { User, UsersStats } from "../../features/users/models/user.interface";
 
 @Component({
   selector: 'app-users',
-  imports: [Menu, UsersHeader, UsersStatsCards, UsersTable],
+  imports: [Menu, UsersHeader, UsersStatsCards, UsersTable, CreateUserDialog],
   templateUrl: './users.html',
   styleUrl: './users.css'
 })
 export class Users {
+  isCreateUserModalVisible = signal(false);
+  usersTable = viewChild(UsersTable);
+
   // Datos de estadísticas
   stats = signal<UsersStats>({
     total: 36,
@@ -34,10 +38,16 @@ export class Users {
   );
 
   onNewUser(): void {
-    console.log('Nuevo usuario');
+    this.isCreateUserModalVisible.set(true);
+  }
+
+  onUserCreated(): void {
+    // TODO: Reload users from API
+    console.log('Usuario creado');
   }
 
   onAssignUsers(users: User[]): void {
     console.log('Asignar usuarios:', users);
   }
 }
+

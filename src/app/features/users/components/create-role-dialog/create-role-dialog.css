@@ -127,3 +127,8 @@
   background-color: #cbd5e1;
   border-radius: 3px;
 }
+
+.required {
+  color: #dc2626;
+  font-weight: 600;
+}
