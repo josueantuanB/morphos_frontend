@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoginInterface } from '../features/auth/models/login.interface';
 import { LoginRootInterface } from '../features/auth/models/login.root.interface';
 import { LoginResponse } from '../features/auth/models/login.response.interface';
-import { tap } from 'rxjs';
+import { tap, throwError } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
@@ -87,5 +87,25 @@ export class AuthService {
     this.cookieService.delete('accessToken', '/');
     this.cookieService.delete('refreshToken', '/');
     this.cookieService.delete('userData', '/');
+  }
+
+  refreshToken() {
+    const refreshToken = this.cookieService.get('refreshToken');
+    if (!refreshToken) {
+      return throwError(() => new Error('No refresh token available'));
+    }
+
+    const headers = new HttpHeaders({
+      'RefreshToken': refreshToken
+    });
+
+    return this.http.post<LoginResponse>(`${this.apiUrl}/authentication/refresh`, {}, { headers })
+      .pipe(
+        tap(resp => {
+          this.cookieService.set('accessToken', resp.accessToken, 1, '/', '', false, 'Strict');
+          this.cookieService.set('refreshToken', resp.refreshToken, 1, '/', '', false, 'Strict');
+          this.cookieService.set('userData', JSON.stringify(resp.data), 1, '/', '', false, 'Strict');
+        })
+      );
   }
 }
